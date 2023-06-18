@@ -8,32 +8,34 @@
             <br> 
             untuk masuk ke akun anda
           </p>
-          <InputField 
-            type="email"
-            placeholder="Email"
-            class="mt-5"
-          />
-          <InputField 
-            :type="inputType"
-            placeholder="Password"
-            class="mt-5"
-          />
-          <div class="flex justify-between mt-2">
-            <div class="flex">
-              <input 
-                type="checkbox" 
-                @click="showPassword()"
-              >
-              <p class="text-[#fffffe] text-[14px] ml-2">Tampilkan Password</p>
+          <form @submit.prevent="submit">
+            <InputField 
+              type="email"
+              placeholder="Email"
+              class="mt-5"
+            />
+            <InputField 
+              :type="inputType"
+              placeholder="Password"
+              class="mt-5"
+            />
+            <div class="flex justify-between mt-2">
+              <div class="flex">
+                <input 
+                  type="checkbox" 
+                  @click="showPassword()"
+                >
+                <p class="text-[#fffffe] text-[14px] ml-2">Tampilkan Password</p>
+              </div>
+              <div>
+                <a 
+                  href="" 
+                  class="text-[#f9bc60] text-[14px] ml-2"
+                >Lupa Password ?</a>
+              </div>
             </div>
-            <div>
-              <a 
-                href="" 
-                class="text-[#f9bc60] text-[14px] ml-2"
-              >Lupa Password ?</a>
-            </div>
-          </div>
-          <Button class="mt-5" label="Masuk" />
+            <Button class="mt-5" label="Masuk" />
+          </form>
         </div>
       </div>
   </div>
@@ -42,8 +44,14 @@
 <script setup>
 // Import
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import InputField from '@/components/input/Input.vue'
 import Button from "@/components/button/Button.vue"
+
+// Define Router and Store
+const router = useRouter()
+const store  = useStore()
 
 // Ref
 const passwordIsShow = ref(false)
@@ -53,6 +61,9 @@ function showPassword() {
   passwordIsShow.value = !passwordIsShow.value
 }
 
+function submit() {
+  router.push({ path: '/dashboard/guru' })
+}
 // Computed
 const inputType = computed(() => {
   return passwordIsShow.value ? "text" : "password"
